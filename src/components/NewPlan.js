@@ -103,18 +103,41 @@ function NewPlan({ navigation }) {
 					style={{ marginVertical: 10 }}
 				/>
 			)}
-			<Text style={{ fontSize: 11, color: '#777' }}>
-				Place ID: {searchedPlace.placeID}
-			</Text>
-			<Text style={{ fontWeight: 'bold', fontSize: 22 }}>
-				{searchedPlace.name}
-			</Text>
-			<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-				<Icon type="AntDesign" name="star" style={{ fontSize: 12 }} />
-				<Text style={{ fontSize: 16 }}> {searchedPlace.rating}</Text>
-				<Text>, </Text>
-				<Icon type="MaterialIcons" name="location-on" style={{ fontSize: 12 }} />
-				<Text style={{ fontSize: 14 }}>{searchedPlace.address}</Text>
+			<View style={{ flexDirection: 'row' }}>
+				<View style={{flex:7}}>
+					<Text style={{ fontSize: 11, color: '#777' }}>
+						Place ID: {searchedPlace.placeID}
+					</Text>
+
+					<Text style={{ fontWeight: 'bold', fontSize: 22 }}>
+						{searchedPlace.name}
+					</Text>
+
+
+					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+						<Icon type="AntDesign" name="star" style={{ fontSize: 12 }} />
+						<Text style={{ fontSize: 16 }}> {searchedPlace.rating}</Text>
+						<Text>, </Text>
+						<Icon type="MaterialIcons" name="location-on" style={{ fontSize: 12 }} />
+						<Text style={{ fontSize: 14 }}>{searchedPlace.address}</Text>
+					</View>
+				</View>
+
+				{JSON.stringify(searchedPlace) !== '{}' ?
+					<View style={{flex:3}}>
+						<TouchableOpacity
+							onPress={() => navigation.navigate('Map View', {
+								searchedPlace: searchedPlace,
+								nearBy: nearbyRestaurantsOfPlace
+							})}
+							style={{ marginLeft: 30 }}>
+							<Image
+								style={{ height: 50, width: 50, alignSelf: 'center' }}
+								source={require('../assets/map.png')}
+							/>
+						</TouchableOpacity>
+					</View>
+					: null}
 			</View>
 			<Text style={{ fontWeight: 'bold', fontSize: 18, marginTop: 10 }}>
 				Nearby Hotels/Restaurants &amp; Places
@@ -151,7 +174,7 @@ function NewPlan({ navigation }) {
 								/>
 								<Text style={{ fontSize: 12 }}>{place.vicinity}</Text>
 							</View>
-							<TouchableOpacity style={{position: 'absolute', top: 10, right: 10, padding: 10}}
+							<TouchableOpacity style={{ position: 'absolute', top: 10, right: 10, padding: 10 }}
 								onPress={() => {
 									let remainingPleaces = nearbyRestaurantsOfPlace.filter((p) => p.place_id !== place.place_id);
 									setNearbyRestaurantsOfPlace(remainingPleaces);
@@ -211,6 +234,7 @@ function NewPlan({ navigation }) {
 							Pick a Place
             </Text>
 					</TouchableOpacity>
+
 					<TouchableOpacity
 						onPress={() => {
 							let user = auth().currentUser;

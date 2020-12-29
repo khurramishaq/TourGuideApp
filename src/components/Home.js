@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Icon} from 'native-base';
 import NewPlan from './NewPlan';
+import ViewMap from './ViewMap';
 import YourPlan from './YourPlan';
 import Profile from './Profile';
 import Blogs from './Blogs';
@@ -177,7 +178,7 @@ function NewPlan_StackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Plan a Trip" component={NewPlan} options={options} />
-
+      <Stack.Screen name="Map View" component={ViewMap} options={options} />
       <Stack.Screen name="Your Plan" component={YourPlan} options={options} />
 
       <Stack.Screen
@@ -228,6 +229,7 @@ function MyPlans_StackNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="My Plans" component={MyPlans} options={options} />
       <Stack.Screen name="Plan" component={Plan} options={options} />
+      <Stack.Screen name="Map View" component={ViewMap} options={options} />
     </Stack.Navigator>
   );
 }
