@@ -15,7 +15,11 @@ import YourPlan from './YourPlan';
 import Profile from './Profile';
 import Blogs from './Blogs';
 import Hotels from './Hotels';
+import HotelCard from './HotelCard';
+import HotelDetail from './HotelDetail';
 import Places from './Places';
+import PlaceCard from './PlaceCard';
+import Detail from './PlaceDetail';
 import PostABlog from './PostABlog';
 import SavedPlans from './SavedPlans';
 import MyBlogs from './MyBlogs';
@@ -221,6 +225,8 @@ function Hotels_StackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Hotels" component={Hotels} options={options} />
+      <Stack.Screen name="HotelCard" component={HotelCard} options={options} />
+      <Stack.Screen name="Hotel Detail" component={HotelDetail} options={options} />
     </Stack.Navigator>
   );
 }
@@ -240,6 +246,16 @@ function Places_StackNavigator() {
       <Stack.Screen
         name="Visitable Places"
         component={Places}
+        options={options}
+      />
+      <Stack.Screen
+        name="PlaceCard"
+        component={PlaceCard}
+        options={options}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={Detail}
         options={options}
       />
     </Stack.Navigator>

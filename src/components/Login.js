@@ -104,7 +104,7 @@ function Login({navigation}) {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Icon type="Entypo" style={styles.icon} name="mail" color={PRIMARY_COLOR} />
+          <Icon type="Entypo" style={styles.icon} name="mail"/>
           <TextInput
             style={styles.inputs}
             placeholder="Email address"
@@ -116,7 +116,7 @@ function Login({navigation}) {
         </View>
 
         <View style={styles.inputContainer}>
-          <Icon type="Entypo" style={styles.icon} name="lock" color={PRIMARY_COLOR} />
+          <Icon type="Entypo" style={styles.icon} name="lock" />
           <TextInput
             style={styles.inputs}
             placeholder="Password"
@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
 
   icon: {
     marginLeft: 10,
-    fontSize:20
+    fontSize:20,
+    color: PRIMARY_COLOR
   },
 
   forgot: {

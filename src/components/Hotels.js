@@ -1,19 +1,22 @@
 import 'react-native-gesture-handler';
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
+  ScrollView,
+  FlatList
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import GallerySwiper from 'react-native-gallery-swiper';
-import {Container, Header, Content, Accordion, Icon} from 'native-base';
+//import GallerySwiper from 'react-native-gallery-swiper';
+import { Container, Header, Content, Accordion, Icon } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
-import {PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR} from '../utils/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR } from '../utils/colors';
 import Loading from './common/Loading';
+import HotelCard from './HotelCard';
 const ref = firestore().collection('Area');
 
 class Hotels extends React.Component {
@@ -30,7 +33,7 @@ class Hotels extends React.Component {
   }
 
   async getAllHotels() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await ref.get().then((querySnapshot) => {
       const temp = [];
       querySnapshot.forEach(async (doc1) => {
@@ -50,19 +53,17 @@ class Hotels extends React.Component {
                   querySnapshot.forEach((doc) => {
                     const swiperimg = [];
                     for (let i = 0; i < doc.data().image.length; i++) {
-                      swiperimg.push({
-                        url: doc.data().image[i],
-                        dimensions: {width: 250, height: 200},
-                      });
+                      swiperimg.push(doc.data().image[i]);
                     }
                     temp.push({
-                      name: doc.id,
+                      name: doc.data().Name,
                       description: doc.data().Description,
                       price: doc.data().Price,
                       swiper: swiperimg,
+                      image: doc.data().image[0]
                     });
                   });
-                  this.setState({dataArray: temp, loading: false});
+                  this.setState({ dataArray: temp, loading: false });
                 });
             });
           });
@@ -74,9 +75,9 @@ class Hotels extends React.Component {
     await ref.get().then((querySnapshot) => {
       const tempDoc = [];
       querySnapshot.forEach((doc) => {
-        tempDoc.push({label: doc.id, value: doc.id});
+        tempDoc.push({ label: doc.id, value: doc.id });
       });
-      this.setState({Area: tempDoc});
+      this.setState({ Area: tempDoc });
     });
   }
 
@@ -88,15 +89,15 @@ class Hotels extends React.Component {
       .then((querySnapshot) => {
         const cities = [];
         querySnapshot.forEach((doc) => {
-          cities.push({label: doc.id, value: doc.id});
+          cities.push({ label: doc.id, value: doc.id });
         });
 
-        this.setState({City: cities});
+        this.setState({ City: cities });
       });
   }
 
   async filteredHotels(area, city) {
-    this.setState({loading:true})
+    this.setState({ loading: true })
     await ref
       .doc(area)
       .collection('City')
@@ -108,18 +109,19 @@ class Hotels extends React.Component {
         querySnapshot.forEach((doc) => {
           const swiperimg = [];
           for (let i = 0; i < doc.data().image.length; i++) {
-            swiperimg.push({url: doc.data().image[i]});
+            swiperimg.push(doc.data().image[i]);
           }
 
           filteredHotels.push({
-            name: doc.id,
+            name: doc.data().Name,
             description: doc.data().Description,
             price: doc.data().Price,
             swiper: swiperimg,
+            image: doc.data().image[0]
           });
         });
 
-        this.setState({dataArray: filteredHotels, loading:false});
+        this.setState({ dataArray: filteredHotels, loading: false });
       });
   }
 
@@ -128,70 +130,70 @@ class Hotels extends React.Component {
     this.loadAreas();
   }
 
-  _renderHeader(item, expanded) {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingHorizontal: 10,
-          paddingVertical: 2,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginVertical: 3,
-          backgroundColor: PRIMARY_COLOR,
-        }}>
-        <View style={{flexDirection: 'row'}}>
-          <Image
-            style={{height: 70, width: 70}}
-            resizeMode="contain"
-            source={{uri: item.swiper[0].url}}
-          />
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 16,
-              marginTop: 10,
-              marginLeft: 5,
-              color: SECONDARY_COLOR,
-            }}>
-            {item.name}
-          </Text>
-        </View>
-        {expanded ? (
-          <Icon
-            type="MaterialIcons"
-            style={{fontSize: 18, color: SECONDARY_COLOR}}
-            name="remove-circle"
-          />
-        ) : (
-          <Icon
-            type="MaterialIcons"
-            style={{fontSize: 18, color: SECONDARY_COLOR}}
-            name="add-circle"
-          />
-        )}
-      </View>
-    );
-  }
-  _renderContent(item) {
-    return (
-      <View>
-        <Text style={(styles.description, styles.bold)}>Images: </Text>
-        <View>
-          <GallerySwiper
-            style={styles.backgroundColor}
-            images={item.swiper}
-            sensitiveScroll={false}
-          />
-        </View>
-        <Text style={(styles.description, styles.bold)}>Description: </Text>
-        <Text style={styles.description}>{item.description} </Text>
+  // _renderHeader(item, expanded) {
+  //   return (
+  //     <View
+  //       style={{
+  //         flexDirection: 'row',
+  //         paddingHorizontal: 10,
+  //         paddingVertical: 2,
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //         marginVertical: 3,
+  //         backgroundColor: PRIMARY_COLOR,
+  //       }}>
+  //       <View style={{flexDirection: 'row'}}>
+  //         <Image
+  //           style={{height: 70, width: 70}}
+  //           resizeMode="contain"
+  //           source={{uri: item.swiper[0].url}}
+  //         />
+  //         <Text
+  //           style={{
+  //             fontWeight: 'bold',
+  //             fontSize: 16,
+  //             marginTop: 10,
+  //             marginLeft: 5,
+  //             color: SECONDARY_COLOR,
+  //           }}>
+  //           {item.name}
+  //         </Text>
+  //       </View>
+  //       {expanded ? (
+  //         <Icon
+  //           type="MaterialIcons"
+  //           style={{fontSize: 18, color: SECONDARY_COLOR}}
+  //           name="remove-circle"
+  //         />
+  //       ) : (
+  //         <Icon
+  //           type="MaterialIcons"
+  //           style={{fontSize: 18, color: SECONDARY_COLOR}}
+  //           name="add-circle"
+  //         />
+  //       )}
+  //     </View>
+  //   );
+  // }
+  // _renderContent(item) {
+  //   return (
+  //     <View>
+  //       <Text style={(styles.description, styles.bold)}>Images: </Text>
+  //       <View>
+  //         <GallerySwiper
+  //           style={styles.backgroundColor}
+  //           images={item.swiper}
+  //           sensitiveScroll={false}
+  //         />
+  //       </View>
+  //       <Text style={(styles.description, styles.bold)}>Description: </Text>
+  //       <Text style={styles.description}>{item.description} </Text>
 
-        <Text style={(styles.description, styles.bold)}>Price: </Text>
-        <Text style={styles.description}>{item.price} </Text>
-      </View>
-    );
-  }
+  //       <Text style={(styles.description, styles.bold)}>Price: </Text>
+  //       <Text style={styles.description}>{item.price} </Text>
+  //     </View>
+  //   );
+  // }
 
   render() {
     return (
@@ -206,7 +208,7 @@ class Hotels extends React.Component {
               }}
               style={pickerStyles1}
               onValueChange={(value) =>
-                this.LoadCities(value) && this.setState({selectedArea: value})
+                this.LoadCities(value) && this.setState({ selectedArea: value })
               }
               useNativeAndroidPickerStyle={false}
               items={this.state.Area}
@@ -215,7 +217,7 @@ class Hotels extends React.Component {
                   <Icon
                     type="AntDesign"
                     name="caretdown"
-                    style={{fontSize: 15}}
+                    style={{ fontSize: 15 }}
                   />
                 );
               }}
@@ -229,7 +231,7 @@ class Hotels extends React.Component {
                 color: 'red',
               }}
               style={pickerStyles1}
-              onValueChange={(value) => this.setState({selectedCity: value})}
+              onValueChange={(value) => this.setState({ selectedCity: value })}
               useNativeAndroidPickerStyle={false}
               items={this.state.City}
               Icon={() => {
@@ -237,7 +239,7 @@ class Hotels extends React.Component {
                   <Icon
                     type="AntDesign"
                     name="caretdown"
-                    style={{fontSize: 15}}
+                    style={{ fontSize: 15 }}
                   />
                 );
               }}
@@ -265,7 +267,7 @@ class Hotels extends React.Component {
         </View>
         <View style={styles.list}>
           <Loading loading={this.state.loading} />
-          <Container>
+          {/* <Container>
             <Content padder style={{backgroundColor: SECONDARY_COLOR}}>
               <Accordion
                 dataArray={this.state.dataArray}
@@ -275,7 +277,24 @@ class Hotels extends React.Component {
                 renderContent={this._renderContent}
               />
             </Content>
-          </Container>
+          </Container> */}
+
+          <ScrollView scrollEventThrottle={16}>
+            {this.state.dataArray != null && this.state.dataArray.length > 0 ?
+              <FlatList
+                data={this.state.dataArray}
+                renderItem={({ item, index }) => {
+                  return <HotelCard key={index} hotel={item} navigation={this.props.navigation} />
+                }}
+                keyExtractor={index => index}
+                style={styles.flatList}
+                horizontal={false}
+                showsHorizontalScrollIndicator={false}
+                marginBottom={0}
+              />
+              : null}
+          </ScrollView>
+
         </View>
       </View>
     );
@@ -370,7 +389,7 @@ const styles = StyleSheet.create({
   },
 
   filterButton: {
-    backgroundColor: 'black',
+    backgroundColor: PRIMARY_COLOR,
   },
 
   filterText: {

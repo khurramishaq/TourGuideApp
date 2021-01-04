@@ -201,7 +201,7 @@ function SignUp({navigation}) {
 
         <View style={styles.dob}>
           <TouchableOpacity onPress={showDatePicker}>
-            <Icon type="FontAwesome" name="calendar" style={{fontSize:20}} />
+            <Icon type="FontAwesome" name="calendar" style={{fontSize:20, color: PRIMARY_COLOR}} />
           </TouchableOpacity>
           <DateTimePickerModal
             maximumDate={new Date()}
@@ -223,9 +223,9 @@ function SignUp({navigation}) {
           initial={'male'}
           formHorizontal={true}
           labelHorizontal={true}
-          labelColor={'black'}
-          buttonColor={'black'}
-          selectedButtonColor={'black'}
+          labelColor= {PRIMARY_COLOR}
+          buttonColor={PRIMARY_COLOR}
+          selectedButtonColor={PRIMARY_COLOR}
           buttonSize={10}
           buttonOuterSize={20}
           animation={true}
