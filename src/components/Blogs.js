@@ -113,9 +113,10 @@ class Blogs extends React.Component {
     return (
       <View style={styles.container}>
         <Loading loading={this.state.loading} />
-        <View style={styles.title}>
+
+        {/* <View style={styles.title}>
           <Text style={styles.titleText}>Blogs uploaded by all travelers:</Text>
-        </View>
+        </View> */}
 
         <View style={styles.list}>
           <Container>

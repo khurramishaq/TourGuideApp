@@ -69,9 +69,10 @@ class MyPlans extends React.Component {
     return (
       <View style={styles.container}>
         <Loading loading={this.state.loading} />
-        <View style={styles.title}>
+        
+        {/* <View style={styles.title}>
           <Text style={styles.titleText}>My Uploaded Plans are: </Text>
-        </View>
+        </View> */}
 
         <View style={styles.list}>
           <FlatList
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
 
   list: {
     flex: 8,
+    marginTop: 20
   },
 
   description: {

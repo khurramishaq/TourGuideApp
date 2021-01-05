@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   TouchableOpacity,
   View,
   StyleSheet,
   Text,
-  Image,
   Alert,
   BackHandler,
+  Dimensions,
 } from 'react-native';
-import {Icon} from 'native-base';
+import { Icon } from 'native-base';
 import NewPlan from './NewPlan';
 import ViewMap from './ViewMap';
 import YourPlan from './YourPlan';
@@ -26,86 +26,104 @@ import MyBlogs from './MyBlogs';
 import MyPlans from './MyPlans';
 import Plan from './Plan';
 import ResetPassword from './ResetPwd';
-import {DrawerActions} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import {SliderBox} from 'react-native-image-slider-box';
+import { DrawerActions } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { SliderBox } from 'react-native-image-slider-box';
 import auth from '@react-native-firebase/auth';
 import SideMenu from './common/SideMenu'
-import {PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR} from '../utils/colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../utils/colors';
 
 const img = [
-  'https://insider.pk/wp-content/uploads/2015/04/1-Lake-Saif-ul-Malook.jpg',
+  'https://propakistani.pk/wp-content/uploads/2018/04/pakistan-tourism1.jpg',
 
   'https://insider.pk/wp-content/uploads/2015/04/2.-Concordia.jpg',
 
-  'https://insider.pk/wp-content/uploads/2015/04/Deosai_Plateau_2-1024x768.jpg',
+  'https://www.blizin.com/public/images/uploads/articles/budgetfriendlynorthernareasinpakistanforhoneymoon-A-1564311798.webp',
 
-  'https://insider.pk/wp-content/uploads/2015/04/4.-Kalash-Valley.jpg',
+  'https://insider.pk/wp-content/uploads/2015/04/1-Lake-Saif-ul-Malook.jpg',
 
-  'https://insider.pk/wp-content/uploads/2015/04/7.-Badshahi-mosque.jpg',
+  'https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/09/23/c5/20.jpg',
 
-  'https://insider.pk/wp-content/uploads/2015/04/01-Rohtas-Fort.jpg',
+  'https://www.travelo.pk/blog/wp-content/uploads/2018/06/Banjosa-Lake.jpg',
 
-  'https://insider.pk/wp-content/uploads/2015/04/9.-Hingol-National-park.jpg',
-
-  'https://insider.pk/wp-content/uploads/2015/04/10.-Wagah-border.jpg',
-
-  'https://insider.pk/wp-content/uploads/2015/04/11.-taxila-1024x655.jpg',
-
-  'https://insider.pk/wp-content/uploads/2015/04/12.-Mazar-e-Quaid-1024x768.jpg',
-
-  'https://insider.pk/wp-content/uploads/2015/04/13.-Mohenjo-Daro.jpg',
-
-  'https://insider.pk/wp-content/uploads/2015/04/15.-Pir-Sohawa-1024x768.jpg',
+  'https://www.brandsynario.com/wp-content/uploads/2017/07/swat-lead.jpg'
 ];
 
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.half1}>
         <View style={styles.image}>
           <SliderBox
             images={img}
-            sliderBoxHeight={300}
-            parentWidth={340}
-            imageLoadingColor="#777"
-            dotColor="#2196F3"
+            sliderBoxHeight={200}
+            parentWidth={350}
+            resizeMethod={'resize'}
+            resizeMode={'cover'}
+            autoplay
+            circleLoop
+            paginationBoxStyle={{
+              position: "absolute",
+              bottom: 0,
+              padding: 0,
+              alignItems: "center",
+              alignSelf: "center",
+              justifyContent: "center",
+              paddingVertical: 10
+            }}
+            ImageComponentStyle={{ borderRadius: 20, width: '100%' }}
+            imageLoadingColor={PRIMARY_COLOR}
+            dotColor={PRIMARY_COLOR}
+            inactiveDotColor="#dbd4cc"
           />
         </View>
       </View>
-      <View style={styles.half2}>
-        <View style={styles.planMargin}>
-          <TouchableOpacity onPress={() => navigation.navigate('NewPlan')}>
-            <Image style={styles.icon} source={require('../assets/plan.png')} />
+      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 100 }}>
+        <View style={{ flex: 5 }}>
+          <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('NewPlan')}>
+            <FontAwesome
+              name="plane"
+              size={80}
+              color={PRIMARY_COLOR}
+            />
           </TouchableOpacity>
           <Text style={styles.options}>Plan a trip</Text>
         </View>
-        <View style={styles.hotelMargin}>
-          <TouchableOpacity onPress={() => navigation.navigate('Hotels')}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/hotel.png')}
+        <View style={{ flex: 5 }}>
+          <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Hotels')}>
+            <FontAwesome
+              name="hotel"
+              size={80}
+              color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
           <Text style={styles.options}>Hotels</Text>
         </View>
       </View>
 
-      <View style={styles.half2}>
-        <View style={styles.savedPlansMargin}>
-          <TouchableOpacity onPress={() => navigation.navigate('Places')}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/place.png')}
+      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 100, marginTop: -40 }}>
+        <View style={{ flex: 5 }}>
+          <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Places')}>
+            <MaterialIcons
+              name="place"
+              size={80}
+              color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
           <Text style={styles.options}>Places</Text>
         </View>
-        <View style={styles.blogMargin}>
-          <TouchableOpacity onPress={() => navigation.navigate('Blogs')}>
-            <Image style={styles.icon} source={require('../assets/blog.png')} />
+        <View style={{ flex: 5 }}>
+          <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Blogs')}>
+            <FontAwesome5
+              name="blog"
+              size={80}
+              color={PRIMARY_COLOR}
+            />
           </TouchableOpacity>
           <Text style={styles.options}>Blogs</Text>
         </View>
@@ -126,7 +144,7 @@ function HomeScreen({navigation}) {
 
 const Stack = createStackNavigator();
 
-const options = ({navigation}) => ({
+const options = ({ navigation }) => ({
   headerTitleAlign: 'center',
   headerStyle: {
     backgroundColor: PRIMARY_COLOR,
@@ -138,7 +156,7 @@ const options = ({navigation}) => ({
 
   headerLeft: () => (
     <TouchableOpacity
-      style={{marginLeft: 10}}
+      style={{ marginLeft: 10 }}
       onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
       <Icon type="Entypo" name="menu" style={styles.headerIcon} />
     </TouchableOpacity>
@@ -146,7 +164,7 @@ const options = ({navigation}) => ({
 
   headerRight: () => (
     <TouchableOpacity
-      style={{marginRight: 10}}
+      style={{ marginRight: 10 }}
       onPress={() =>
         Alert.alert('Log Out', 'Are you sure you want to log out?', [
           {
@@ -162,7 +180,7 @@ const options = ({navigation}) => ({
                 }),
             style: 'cancel',
           },
-          {text: 'No', onPress: () => console.log('No Pressed')},
+          { text: 'No', onPress: () => console.log('No Pressed') },
         ])
       }>
       <Icon type="Entypo" name="log-out" style={styles.headerIcon} />
@@ -295,22 +313,23 @@ function Home() {
         drawerContent={props => <SideMenu {...props} />}
         drawerContentOptions={{
           activeBackgroundColor: SECONDARY_COLOR,
-          activeTintColor: ASSET_COLOR,
+          activeTintColor: PRIMARY_COLOR,
           inactiveTintColor: SECONDARY_COLOR,
-          labelStyle: {fontSize: 15, fontWeight: 'bold'}
+          labelStyle: { fontSize: 15, fontWeight: 'bold' }
         }}
         drawerType="front"
+        openByDefault={false}
         backBehavior="initialRoute">
         <Drawer.Screen
           name="Home"
           component={HomeSreen_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="Entypo"
                 name="home"
                 size={20}
-                style={{color: color, flex: 0.3}}
+                style={{ color: color, flex: 0.3 }}
               />
             ),
             drawerLabel: 'Home',
@@ -321,12 +340,12 @@ function Home() {
           name="NewPlan"
           component={NewPlan_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="FontAwesome"
                 name="plane"
                 size={20}
-                style={{color: color,flex: 0.35}}
+                style={{ color: color, flex: 0.35 }}
               />
             ),
             drawerLabel: 'New Plan',
@@ -336,12 +355,12 @@ function Home() {
           name="MyPlans"
           component={MyPlans_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="Entypo"
                 name="save"
                 size={20}
-                style={{color: color,flex: 0.35}}
+                style={{ color: color, flex: 0.35 }}
               />
             ),
             drawerLabel: 'My Plans',
@@ -351,12 +370,12 @@ function Home() {
           name="Profile"
           component={Profile_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="FontAwesome"
                 name="user"
                 size={20}
-                style={{color: color,flex: 0.3}}
+                style={{ color: color, flex: 0.3 }}
               />
             ),
             drawerLabel: 'Profile',
@@ -367,12 +386,12 @@ function Home() {
           name="Blogs"
           component={Blogs_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="FontAwesome5"
                 name="blog"
                 size={20}
-                style={{color: color,flex: 0.3}}
+                style={{ color: color, flex: 0.3 }}
               />
             ),
             drawerLabel: 'Blogs',
@@ -382,12 +401,12 @@ function Home() {
           name="Hotels"
           component={Hotels_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="FontAwesome"
                 name="hotel"
                 size={20}
-                style={{color: color,flex: 0.3}}
+                style={{ color: color, flex: 0.3 }}
               />
             ),
             drawerLabel: 'Hotels',
@@ -398,12 +417,12 @@ function Home() {
           name="Places"
           component={Places_StackNavigator}
           options={{
-            drawerIcon: ({color}) => (
+            drawerIcon: ({ color }) => (
               <Icon
                 type="MaterialIcons"
                 name="place"
                 size={20}
-                style={{color: color,flex: 0.3}}
+                style={{ color: color, flex: 0.3 }}
               />
             ),
             drawerLabel: 'Places',
@@ -438,11 +457,14 @@ const styles = StyleSheet.create({
   options: {
     textAlign: 'center',
     fontSize: 15,
+    fontWeight: 'bold',
+    color: PRIMARY_COLOR
+
   },
 
   image: {
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 30,
+    marginBottom: 40,
     justifyContent: 'center',
   },
 

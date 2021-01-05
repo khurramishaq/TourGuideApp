@@ -24,10 +24,6 @@ function Loading({navigation}) {
       <View>
         <Image style={styles.logoIcon} source={require('../assets/logo.png')} />
       </View>
-
-      <View>
-        <Text style={styles.text}>Welcome to Tour Guide Application</Text>
-      </View>
     </View>
   );
 }
@@ -37,19 +33,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: SECONDARY_COLOR,
+    backgroundColor: PRIMARY_COLOR,
   },
 
   text: {
-    color: PRIMARY_COLOR,
-    fontSize: 30,
+    color: SECONDARY_COLOR,
+    fontSize: 20,
     margin: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
 
   logoIcon: {
-    width: 150,
-    height: 150,
+    width: 250,
+    height: 250,
   },
 });
 

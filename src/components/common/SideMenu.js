@@ -3,7 +3,7 @@ import { View, SafeAreaView, Image, Text, ScrollView, StyleSheet } from 'react-n
 import { DrawerItemList } from '@react-navigation/drawer';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { ASSET_COLOR, SECONDARY_COLOR } from '../../utils/colors';
+import { SECONDARY_COLOR, PRIMARY_COLOR } from '../../utils/colors';
 function SideMenu(props) {
 
   const [name, setName] = useState('');
@@ -54,7 +54,7 @@ function SideMenu(props) {
             <Image style={styles.avatar} source={{ uri: photo }} />
           )}
 
-        <Text style={{ color: ASSET_COLOR, marginTop: 5, fontSize: 20, fontWeight: "bold" }}>
+        <Text style={{ color: PRIMARY_COLOR, marginTop: 5, fontSize: 20, fontWeight: "bold" }}>
           {name}
         </Text>
       </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 50,
-    borderColor: ASSET_COLOR,
+    borderColor: PRIMARY_COLOR,
     borderWidth: 2
   }
 });
