@@ -173,7 +173,7 @@ const options = ({ navigation }) => ({
               auth()
                 .signOut()
                 .then(() => {
-                  BackHandler.exitApp();
+                  navigation.navigate('Login');
                 })
                 .catch(function (error) {
                   Alert.alert('Error', error.message);

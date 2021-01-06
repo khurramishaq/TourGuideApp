@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { Component, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,8 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-//import GallerySwiper from 'react-native-gallery-swiper';
-import { Container, Header, Content, Accordion, Icon } from 'native-base';
+import { Icon } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR } from '../utils/colors';
 import Loading from './common/Loading';
@@ -130,71 +129,6 @@ class Hotels extends React.Component {
     this.loadAreas();
   }
 
-  // _renderHeader(item, expanded) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flexDirection: 'row',
-  //         paddingHorizontal: 10,
-  //         paddingVertical: 2,
-  //         justifyContent: 'space-between',
-  //         alignItems: 'center',
-  //         marginVertical: 3,
-  //         backgroundColor: PRIMARY_COLOR,
-  //       }}>
-  //       <View style={{flexDirection: 'row'}}>
-  //         <Image
-  //           style={{height: 70, width: 70}}
-  //           resizeMode="contain"
-  //           source={{uri: item.swiper[0].url}}
-  //         />
-  //         <Text
-  //           style={{
-  //             fontWeight: 'bold',
-  //             fontSize: 16,
-  //             marginTop: 10,
-  //             marginLeft: 5,
-  //             color: SECONDARY_COLOR,
-  //           }}>
-  //           {item.name}
-  //         </Text>
-  //       </View>
-  //       {expanded ? (
-  //         <Icon
-  //           type="MaterialIcons"
-  //           style={{fontSize: 18, color: SECONDARY_COLOR}}
-  //           name="remove-circle"
-  //         />
-  //       ) : (
-  //         <Icon
-  //           type="MaterialIcons"
-  //           style={{fontSize: 18, color: SECONDARY_COLOR}}
-  //           name="add-circle"
-  //         />
-  //       )}
-  //     </View>
-  //   );
-  // }
-  // _renderContent(item) {
-  //   return (
-  //     <View>
-  //       <Text style={(styles.description, styles.bold)}>Images: </Text>
-  //       <View>
-  //         <GallerySwiper
-  //           style={styles.backgroundColor}
-  //           images={item.swiper}
-  //           sensitiveScroll={false}
-  //         />
-  //       </View>
-  //       <Text style={(styles.description, styles.bold)}>Description: </Text>
-  //       <Text style={styles.description}>{item.description} </Text>
-
-  //       <Text style={(styles.description, styles.bold)}>Price: </Text>
-  //       <Text style={styles.description}>{item.price} </Text>
-  //     </View>
-  //   );
-  // }
-
   render() {
     return (
       <View style={styles.container}>
@@ -217,7 +151,7 @@ class Hotels extends React.Component {
                   <Icon
                     type="AntDesign"
                     name="caretdown"
-                    style={{ fontSize: 15 }}
+                    style={{ fontSize: 12, color: PRIMARY_COLOR }}
                   />
                 );
               }}
@@ -231,7 +165,12 @@ class Hotels extends React.Component {
                 color: 'red',
               }}
               style={pickerStyles1}
-              onValueChange={(value) => this.setState({ selectedCity: value })}
+              onValueChange={(value) => {
+                this.filteredHotels(
+                  this.state.selectedArea,
+                  value,
+                );
+              }}
               useNativeAndroidPickerStyle={false}
               items={this.state.City}
               Icon={() => {
@@ -239,45 +178,16 @@ class Hotels extends React.Component {
                   <Icon
                     type="AntDesign"
                     name="caretdown"
-                    style={{ fontSize: 15 }}
+                    style={{ fontSize: 12, color: PRIMARY_COLOR }}
                   />
                 );
               }}
             />
           </View>
-          <View style={styles.button}>
-            <TouchableOpacity
-              style={[styles.buttonContainer, styles.filterButton]}
-              onPress={() => {
-                if (
-                  this.state.selectedArea == '' ||
-                  this.state.selectedCity == ''
-                ) {
-                  Alert.alert('Alert', 'Select both Area and City.');
-                } else {
-                  this.filteredHotels(
-                    this.state.selectedArea,
-                    this.state.selectedCity,
-                  );
-                }
-              }}>
-              <Text style={styles.filterText}>Filter</Text>
-            </TouchableOpacity>
-          </View>
+
         </View>
         <View style={styles.list}>
           <Loading loading={this.state.loading} />
-          {/* <Container>
-            <Content padder style={{backgroundColor: SECONDARY_COLOR}}>
-              <Accordion
-                dataArray={this.state.dataArray}
-                animation={true}
-                expanded={true}
-                renderHeader={this._renderHeader}
-                renderContent={this._renderContent}
-              />
-            </Content>
-          </Container> */}
 
           <ScrollView scrollEventThrottle={16}>
             {this.state.dataArray != null && this.state.dataArray.length > 0 ?
@@ -307,20 +217,21 @@ const pickerStyles1 = {
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 0.5,
-    borderColor: 'black',
-    color: 'black',
-    paddingRight: 30,
-    width: 130,
+    borderColor: PRIMARY_COLOR,
+    color: PRIMARY_COLOR,
+    width: '100%',
+    height: 35,
+    borderRadius: 15
   },
 
   iconContainer: {
-    top: 15,
+    top: 10,
     right: 10,
   },
 
   placeholder: {
-    color: 'black',
-    fontSize: 13,
+    color: PRIMARY_COLOR,
+    fontSize: 15,
   },
 };
 
@@ -334,67 +245,26 @@ const styles = StyleSheet.create({
   filter: {
     flex: 1,
     flexDirection: 'row',
+    marginTop: -5
   },
 
   list: {
     flex: 9,
   },
 
-  description: {
-    backgroundColor: '#e3f1f1',
-    padding: 10,
-    fontStyle: 'italic',
-  },
-
-  bold: {
-    backgroundColor: '#e3f1f1',
-    padding: 10,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-  },
-
-  backgroundColor: {
-    backgroundColor: '#e3f1f1',
-    alignItems: 'center',
-  },
-
-  tinyLogo: {
-    width: 250,
-    height: 200,
-  },
-
   area: {
-    flex: 4,
+    flex: 5,
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 5,
+    marginRight: 2.5
   },
 
   city: {
-    flex: 4,
+    flex: 5,
     justifyContent: 'center',
-  },
-
-  button: {
-    flex: 2,
-    justifyContent: 'center',
-    marginRight: 10,
-  },
-  buttonContainer: {
-    height: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 70,
-    borderRadius: 30,
-  },
-
-  filterButton: {
-    backgroundColor: PRIMARY_COLOR,
-  },
-
-  filterText: {
-    color: 'white',
-  },
+    marginRight: 5,
+    marginLeft: 2.5
+  }
 });
 
 export default Hotels;

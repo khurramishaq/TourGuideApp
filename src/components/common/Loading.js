@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, Modal, StyleSheet } from 'react-native';
+import { PRIMARY_COLOR } from '../../utils/colors';
 export default Loading = ({ loading }) => {
     return (
         <Modal
@@ -12,7 +13,7 @@ export default Loading = ({ loading }) => {
                     <ActivityIndicator
                         animating={loading}
                         size="large"
-                        color="#888"
+                        color={PRIMARY_COLOR}
                     />
                 </View>
             </View>

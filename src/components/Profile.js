@@ -170,6 +170,7 @@ function Profile({navigation}) {
             type="AntDesign"
             name="edit"
             size={15}
+            color={PRIMARY_COLOR}
             iconStyle={styles.nameEdit}
             onPress={() => setNameEdit(true)}
           />
@@ -178,7 +179,7 @@ function Profile({navigation}) {
       <View style={styles.bodyContent}>
         <View style={styles.emailContainer}>
           <View style={styles.iconRow}>
-            <Icon name="email" underlayColor="transparent" />
+            <Icon name="email" underlayColor="transparent" style={{ marginLeft: -30 }} color={PRIMARY_COLOR} />
           </View>
           <View style={styles.emailRow}>
             <Text style={styles.emailText}>{email}</Text>
@@ -186,7 +187,7 @@ function Profile({navigation}) {
         </View>
         <View style={styles.emailContainer}>
           <View style={styles.iconRow}>
-            <Icon name="call" underlayColor="transparent" />
+            <Icon name="call" underlayColor="transparent" style={{ marginLeft: -30 }} color={PRIMARY_COLOR}/>
           </View>
           <View
             style={[
@@ -197,6 +198,7 @@ function Profile({navigation}) {
             <Icon
               type="AntDesign"
               name="edit"
+              color={PRIMARY_COLOR}
               onPress={() => setPhoneEdit(true)}
             />
           </View>
@@ -273,15 +275,16 @@ const styles = StyleSheet.create({
   bodyContent: {
     alignItems: 'center',
     marginTop: 25,
-    borderBottomColor: 'black',
+    borderBottomColor: PRIMARY_COLOR,
     borderWidth: 1,
     marginHorizontal: 30,
     paddingHorizontal: 20,
+    borderRadius: 15
   },
 
   name: {
     fontSize: 23,
-    color: 'black',
+    color: PRIMARY_COLOR,
     fontWeight: '600',
     marginTop: 5,
   },
