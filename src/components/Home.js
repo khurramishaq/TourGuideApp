@@ -83,12 +83,12 @@ function HomeScreen({ navigation }) {
           />
         </View>
       </View>
-      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 100 }}>
+      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 120 }}>
         <View style={{ flex: 5 }}>
           <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('NewPlan')}>
             <FontAwesome
               name="plane"
-              size={80}
+              size={70}
               color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
@@ -98,7 +98,7 @@ function HomeScreen({ navigation }) {
           <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Hotels')}>
             <FontAwesome
               name="hotel"
-              size={80}
+              size={70}
               color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
@@ -106,12 +106,12 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
 
-      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 100, marginTop: -40 }}>
+      <View style={{ flex: 1, flexDirection: "row", width: Dimensions.get("window").width - 120, marginTop: -40 }}>
         <View style={{ flex: 5 }}>
           <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Places')}>
             <MaterialIcons
               name="place"
-              size={80}
+              size={70}
               color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
@@ -121,7 +121,7 @@ function HomeScreen({ navigation }) {
           <TouchableOpacity style={{ alignSelf: "center" }} onPress={() => navigation.navigate('Blogs')}>
             <FontAwesome5
               name="blog"
-              size={80}
+              size={70}
               color={PRIMARY_COLOR}
             />
           </TouchableOpacity>
@@ -129,12 +129,13 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
 
-      <View>
-        <TouchableOpacity onPress={() => navigation.navigate('NewPlan')}>
+      <View style={styles.plusIcon}>
+        <TouchableOpacity
+          style={{ backgroundColor: '#fcc102', justifyContent: 'center', alignItems: 'center', height: 50, width: 50, borderRadius: 50 }}
+          onPress={() => navigation.navigate('NewPlan')}>
           <Icon
-            type="MaterialIcons"
-            style={styles.plusIcon}
-            name="add-circle"
+            type="FontAwesome"
+            name="plus"
           />
         </TouchableOpacity>
       </View>

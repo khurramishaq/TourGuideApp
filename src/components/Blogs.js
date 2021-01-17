@@ -1,10 +1,10 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {Container, Content, Accordion, Icon} from 'native-base';
+import { Container, Content, Accordion, Icon } from 'native-base';
 import Loading from './common/Loading';
-import {PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR} from '../utils/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR } from '../utils/colors';
 const ref = firestore().collection('users');
 
 class Blogs extends React.Component {
@@ -18,7 +18,7 @@ class Blogs extends React.Component {
   }
 
   async allBlogs() {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const ref = firestore().collection('BLOG');
     await ref.onSnapshot(async (querySnapshot) => {
       const temp = [];
@@ -29,7 +29,7 @@ class Blogs extends React.Component {
           image: doc.data().thumbnail,
         });
       });
-      this.setState({dataArray: temp, loading: false});
+      this.setState({ dataArray: temp, loading: false });
     });
     // ref.get().then(async (querySnapshot) => {
     //   const temp = [];
@@ -53,24 +53,23 @@ class Blogs extends React.Component {
       <View
         style={{
           flexDirection: 'row',
-          padding: 10,
-          marginVertical:3,
+          padding: 5,
+          marginVertical: 3,
           justifyContent: 'space-between',
-          alignItems: 'center',
           backgroundColor: PRIMARY_COLOR,
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
-            style={{height: 70, width: 70}}
+            style={{ height: 70, width: 70 }}
             resizeMode="contain"
-            source={{uri: item.image}}
+            source={{ uri: item.image }}
           />
           <Text
             style={{
               fontWeight: 'bold',
               fontSize: 18,
-              marginTop: 10,
-              marginLeft: 5,
+              margin: 10,
+              alignSelf: 'center',
               color: SECONDARY_COLOR,
             }}>
             {item.name}
@@ -80,16 +79,16 @@ class Blogs extends React.Component {
         {expanded ? (
           <Icon
             type="MaterialIcons"
-            style={{fontSize: 18, color: SECONDARY_COLOR}}
+            style={{ fontSize: 18, color: SECONDARY_COLOR, alignSelf: 'center' }}
             name="remove-circle"
           />
         ) : (
-          <Icon
-            type="MaterialIcons"
-            style={{fontSize: 18, color: SECONDARY_COLOR}}
-            name="add-circle"
-          />
-        )}
+            <Icon
+              type="MaterialIcons"
+              style={{ fontSize: 18, color: SECONDARY_COLOR, alignSelf: 'center' }}
+              name="add-circle"
+            />
+          )}
       </View>
     );
   }
@@ -98,7 +97,7 @@ class Blogs extends React.Component {
       <View>
         <Text style={(styles.description, styles.bold)}>Image: </Text>
         <View style={styles.backgroundColor}>
-          <Image style={styles.tinyLogo} source={{uri: item.image}} />
+          <Image style={styles.tinyLogo} resizeMode="contain" source={{ uri: item.image }} />
         </View>
         <Text style={(styles.description, styles.bold)}>Place Name: </Text>
         <Text style={styles.description}>{item.name} </Text>
@@ -120,7 +119,7 @@ class Blogs extends React.Component {
 
         <View style={styles.list}>
           <Container>
-            <Content padder style={{backgroundColor: SECONDARY_COLOR}}>
+            <Content padder style={{ backgroundColor: SECONDARY_COLOR }}>
               <Accordion
                 dataArray={this.state.dataArray}
                 animation={true}
@@ -133,19 +132,38 @@ class Blogs extends React.Component {
         </View>
 
         <View style={styles.back}>
-          <TouchableOpacity
-            style={[styles.buttonContainer2, styles.buttonColor]}
-            onPress={() => this.props.navigation.navigate('My Blogs')}>
-            <Text style={[styles.loginText, {fontSize: 14}]}>My Blogs</Text>
-          </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.buttonContainer2, styles.buttonColor]}
+            style={{
+              flex: 2,
+              padding: 15,
+              backgroundColor: PRIMARY_COLOR,
+              borderRadius: 20,
+              marginTop: 15,
+              marginBottom: 20,
+              marginRight: 5,
+            }}
             onPress={() => this.props.navigation.navigate('Post A Blog')}>
-            <Text style={[styles.loginText, {fontSize: 14}]}>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', color: SECONDARY_COLOR }}>
               Post a new Blog
             </Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              padding: 15,
+              backgroundColor: '#fcc102',
+              borderRadius: 20,
+              marginTop: 15,
+              marginBottom: 20,
+              marginLeft: 10,
+            }}
+            onPress={() => this.props.navigation.navigate('My Blogs')}>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', color: PRIMARY_COLOR }}>My Blogs</Text>
+          </TouchableOpacity>
+
+
         </View>
       </View>
     );
@@ -174,6 +192,8 @@ const styles = StyleSheet.create({
 
   list: {
     flex: 1,
+    marginLeft: -20,
+    marginRight: -20,
   },
 
   description: {

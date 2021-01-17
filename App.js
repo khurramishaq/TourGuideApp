@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <>
-      <StatusBar backgroundColor="#24292f" barStyle="light-content" />
+      <StatusBar backgroundColor={PRIMARY_COLOR} barStyle="light-content" />
       <NavigationContainer independent={true}>
         <Stack.Navigator>
           <Stack.Screen

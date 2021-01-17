@@ -12,12 +12,10 @@ import {
 	Dimensions,
 } from 'react-native';
 import { Icon } from 'native-base';
-import { Ionicon } from 'native-base';
-import RNPickerSelect from 'react-native-picker-select';
 import firestore from '@react-native-firebase/firestore';
 import RNGooglePlaces from 'react-native-google-places';
 import auth from '@react-native-firebase/auth';
-import { PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR } from '../utils/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../utils/colors';
 import Geolocation from '@react-native-community/geolocation';
 import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 

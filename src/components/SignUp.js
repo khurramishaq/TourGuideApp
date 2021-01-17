@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderColor: PRIMARY_COLOR,
     backgroundColor: '#FFFFFF',
-    borderRadius: 25,
+    borderRadius: 20,
     borderWidth: 1,
     width: 250,
     height: 32,
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     width: 250,
-    borderRadius: 30,
+    borderRadius: 20,
   },
 
   loginButton: {
@@ -333,8 +333,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   logoIcon: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     justifyContent: 'center',
   },
   link: {

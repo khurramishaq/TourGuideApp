@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderColor: PRIMARY_COLOR,
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
+    borderRadius: 20,
     borderWidth: 1,
     width: 300,
     height: 45,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     width: 300,
-    borderRadius: 30,
+    borderRadius: 20,
   },
 
   loginButton: {

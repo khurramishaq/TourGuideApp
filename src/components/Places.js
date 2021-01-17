@@ -202,7 +202,7 @@ const pickerStyles1 = {
     color: PRIMARY_COLOR,
     width: '100%',
     height: 35,
-    borderRadius: 15
+    borderRadius: 10
   },
 
   iconContainer: {

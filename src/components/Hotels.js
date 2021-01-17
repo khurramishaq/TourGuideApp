@@ -138,7 +138,7 @@ class Hotels extends React.Component {
               placeholder={{
                 label: 'Area',
                 value: null,
-                color: 'red',
+                color: PRIMARY_COLOR,
               }}
               style={pickerStyles1}
               onValueChange={(value) =>
@@ -162,7 +162,7 @@ class Hotels extends React.Component {
               placeholder={{
                 label: 'City',
                 value: null,
-                color: 'red',
+                color: PRIMARY_COLOR,
               }}
               style={pickerStyles1}
               onValueChange={(value) => {
@@ -221,7 +221,7 @@ const pickerStyles1 = {
     color: PRIMARY_COLOR,
     width: '100%',
     height: 35,
-    borderRadius: 15
+    borderRadius: 10
   },
 
   iconContainer: {

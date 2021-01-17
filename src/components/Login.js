@@ -103,7 +103,7 @@ function Login({navigation}) {
             source={require('../assets/logo.png')}
           />
         </View>
-        <View style={styles.inputContainer}>
+        <View style={[{...styles.inputContainer}, { marginTop: 20 }]}>
           <Icon type="Entypo" style={styles.icon} name="mail"/>
           <TextInput
             style={styles.inputs}
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderColor: PRIMARY_COLOR,
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
+    borderRadius: 20,
     borderWidth: 1,
     width: 300,
     height: 45,
@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoIcon: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     justifyContent: 'center',
   },
   buttonContainer: {
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     width: 300,
-    borderRadius: 30,
+    borderRadius: 20,
   },
 
   textinformation: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    marginTop: 70,
+    marginTop: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

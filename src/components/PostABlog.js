@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
 import {
   StyleSheet,
@@ -12,14 +12,15 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {Icon} from 'native-base';
+import { Icon } from 'native-base';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import ImagePicker from 'react-native-image-picker';
 import auth from '@react-native-firebase/auth';
-import {PRIMARY_COLOR, SECONDARY_COLOR, ASSET_COLOR} from '../utils/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../utils/colors';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-function PostABlog({navigation}) {
+function PostABlog({ navigation }) {
   const [placeName, setPlaceName] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
@@ -56,14 +57,14 @@ function PostABlog({navigation}) {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.uri};
+        const source = { uri: response.uri };
         setImage(source);
       }
     });
   };
 
   async function uploadImage() {
-    const {uri} = image;
+    const { uri } = image;
     const filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
 
@@ -116,25 +117,22 @@ function PostABlog({navigation}) {
   }
 
   return (
-    <ScrollView style={{backgroundColor: SECONDARY_COLOR}}>
+    <ScrollView style={{ backgroundColor: SECONDARY_COLOR }}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.back}>
-          <Icon type="FontAwesome5" name="arrow-circle-left" size={25} />
-          <TouchableOpacity onPress={() => navigation.navigate('Blogs')}>
-            <Text style={styles.saved}>Back to Blogs Screen</Text>
-          </TouchableOpacity>
-        </View>
-
         <View style={styles.withoutBoder}>
           <TouchableOpacity onPress={selectImage}>
-            <Text style={styles.images}>Add Image</Text>
+            <Text style={styles.images}>Select Image</Text>
           </TouchableOpacity>
-          <Icon type="Entypo" name="image" size={20} />
+          <MaterialIcons
+            name="add-a-photo"
+            size={20}
+            color={PRIMARY_COLOR}
+          />
         </View>
 
         <View>
           {image !== null ? (
-            <Image source={{uri: image.uri}} style={styles.imageBox} />
+            <Image source={{ uri: image.uri }} resizeMode="contain" style={styles.imageBox} />
           ) : null}
         </View>
 
@@ -164,7 +162,15 @@ function PostABlog({navigation}) {
         <View>
           <TouchableOpacity
             disabled={loading}
-            style={[styles.buttonContainer, styles.loginButton]}
+            style={{
+              padding: 15,
+              backgroundColor: PRIMARY_COLOR,
+              borderRadius: 20,
+              marginTop: 10,
+              marginBottom: 20,
+              marginRight: 5,
+              width: 300,
+            }}
             onPress={() => uploadBlog()}>
             {loading ? (
               <ActivityIndicator
@@ -173,8 +179,8 @@ function PostABlog({navigation}) {
                 animating={loading}
               />
             ) : (
-              <Text style={styles.loginText}>Submit</Text>
-            )}
+                <Text style={{ textAlign: 'center', fontWeight: 'bold', color: SECONDARY_COLOR }}>Submit</Text>
+              )}
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -192,7 +198,7 @@ const styles = StyleSheet.create({
   input1: {
     borderColor: PRIMARY_COLOR,
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
+    borderRadius: 20,
     borderWidth: 1,
     width: 300,
     height: 45,
@@ -204,7 +210,7 @@ const styles = StyleSheet.create({
   input2: {
     borderColor: PRIMARY_COLOR,
     backgroundColor: '#FFFFFF',
-    borderRadius: 30,
+    borderRadius: 20,
     borderWidth: 1,
     width: 300,
     height: 200,
@@ -223,7 +229,7 @@ const styles = StyleSheet.create({
   },
 
   loginButton: {
-    backgroundColor: 'black',
+    backgroundColor: PRIMARY_COLOR,
   },
 
   loginText: {
@@ -233,6 +239,7 @@ const styles = StyleSheet.create({
   withoutBoder: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 20,
     marginBottom: 20,
   },
 
@@ -245,7 +252,8 @@ const styles = StyleSheet.create({
 
   images: {
     fontSize: 17,
-    marginRight: 20,
+    marginRight: 10,
+    color: PRIMARY_COLOR
   },
 
   saved: {
